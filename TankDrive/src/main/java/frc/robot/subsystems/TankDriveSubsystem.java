@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -14,30 +16,30 @@ import frc.robot.Constants;
 
 public class TankDriveSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  TalonFX topleftMotor;
-  TalonFX toprightMotor;
-  TalonFX bottomrightMotor;
-  TalonFX bottomleftMotor;
-  TalonFX coralMotor;
-  TalonFXConfiguration pidConfiguration = new TalonFXConfiguration().withSlot0(new Slot0Configs().withKP(1).withKI(0).withKD(0));
+  TalonSRX topleftMotor;
+  TalonSRX toprightMotor;
+  TalonSRX bottomrightMotor;
+  TalonSRX bottomleftMotor;
+  TalonSRX coralMotor;
+ // //TalonSRXConfiguration pidConfiguration = new TalonFXConfiguration().withSlot0(new Slot0Configs().withKP(1).withKI(0).withKD(0));
 
 
   public TankDriveSubsystem() {
-     topleftMotor = new TalonFX(Constants.topleftMotorPort);
-     toprightMotor = new TalonFX(Constants.toprightMotorPort);
-     bottomrightMotor = new TalonFX(Constants.bottomrightMotorPort);
-     bottomleftMotor = new TalonFX(Constants.bottomleftMotorPort);
-     topleftMotor.getConfigurator().apply(pidConfiguration);
-     toprightMotor.getConfigurator().apply(pidConfiguration);
-     bottomleftMotor.getConfigurator().apply(pidConfiguration);
-     bottomrightMotor.getConfigurator().apply(pidConfiguration);
+     topleftMotor = new TalonSRX(Constants.topleftMotorPort);
+     toprightMotor = new TalonSRX(Constants.toprightMotorPort);
+     bottomrightMotor = new TalonSRX(Constants.bottomrightMotorPort);
+     bottomleftMotor = new TalonSRX(Constants.bottomleftMotorPort);
+   //  topleftMotor.getConfigurator().apply(pidConfiguration);
+     //toprightMotor.getConfigurator().apply(pidConfiguration);
+    // bottomleftMotor.getConfigurator().apply(pidConfiguration);
+     //bottomrightMotor.getConfigurator().apply(pidConfiguration);
   }
 
   public void setSpeedMotorDynamic (double setSpeedRight, double setSpeedLeft){
-    topleftMotor.set(setSpeedLeft);
-    toprightMotor.set(setSpeedRight);
-    bottomleftMotor.set(-setSpeedLeft);
-    bottomrightMotor.set(-setSpeedRight);
+    topleftMotor.set(TalonSRXControlMode.PercentOutput, setSpeedLeft);
+    toprightMotor.set( TalonSRXControlMode.PercentOutput,setSpeedRight);
+    bottomleftMotor.set( TalonSRXControlMode.PercentOutput,-setSpeedLeft);
+    bottomrightMotor.set( TalonSRXControlMode.PercentOutput,-setSpeedRight);
   }
   /**
    * Example command factory method.
